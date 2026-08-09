@@ -9,6 +9,7 @@ permissions:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: lucidity-task
+  EKS_CLUSTER_NAME: eks-fecpgECx
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -31,14 +32,10 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./Python_App
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Get EKS cluster name
-        id: get-cluster
-        run: |
-          echo "cluster_name=$(aws eks list-clusters --region $AWS_REGION --query 'clusters[0]' --output text)" >> "$GITHUB_OUTPUT"
-      - name: Configure kubectl
         run: |
           aws eks update-kubeconfig \
             --region $AWS_REGION \
-            --name ${{ steps.get-cluster.outputs.cluster_name }}
+            --name $EKS_CLUSTER_NAME
       - name: Deploy application
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
