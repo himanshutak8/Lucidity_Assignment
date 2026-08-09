@@ -41,7 +41,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          helm upgrade --install lucidity-task ./helm/lucidity-task \
+          helm upgrade --install lucidity-task ./Helm_Charts/lucidity-app \
             --namespace application \
             --create-namespace \
             --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY \
