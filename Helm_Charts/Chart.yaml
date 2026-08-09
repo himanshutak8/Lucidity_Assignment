@@ -1,0 +1,6 @@
+apiVersion: v2
+name: lucidity-task
+description: A Helm chart for deploying the Hello World Python application
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
