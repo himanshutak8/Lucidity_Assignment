@@ -1,37 +1,29 @@
 name: Build and Deploy
-
 on:
   push:
     branches:
       - main
-
 permissions:
-  id-token: write
-  contents: read
-
+  id-token: write     ####This allows GitHub Actions to request an OIDC token.
+  contents: read      ####Allows the workflow to read your repository.
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: lucidity-task
   EKS_CLUSTER_NAME: YOUR_EKS_CLUSTER_NAME
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::555292118434:role/GitHubActions-EKS-Deploy
           aws-region: ${{ env.AWS_REGION }}
-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-
       - name: Build and push Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -39,13 +31,11 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
       - name: Configure kubectl
         run: |
           aws eks update-kubeconfig \
             --region $AWS_REGION \
             --name $EKS_CLUSTER_NAME
-
       - name: Deploy application
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
