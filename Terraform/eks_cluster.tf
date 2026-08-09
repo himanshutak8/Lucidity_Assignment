@@ -64,6 +64,22 @@ module "eks" {
   }
 
   # ------------------------------------------------------------------
+  # Access Entries for GitHub Actions
+  # ------------------------------------------------------------------
+  access_entries = {
+    github_actions = {
+      principal_arn = "arn:aws:iam::555292118434:role/GitHubActions-EKS-Deploy"
+      policy_associations = {
+         github_actions_admin = {
+            policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+            access_scope = {
+                type = "cluster"
+            }
+        }
+    }
+   }
+  }
+  # ------------------------------------------------------------------
   # Cluster Add-ons
   # ------------------------------------------------------------------
 
