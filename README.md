@@ -182,7 +182,7 @@ The infrastructure and cluster access are managed by **Terraform**, while **GitH
 </p>
 
 <a id="monitoring"></a>
-## 4. Monitoring – Prometheus & Grafana
+## 4. Monitoring – Prometheus & Grafana:
 
 The EKS cluster is monitored using the **kube-prometheus-stack**, installed through the Terraform `helm_release` resource after the EKS cluster is successfully provisioned.
 
