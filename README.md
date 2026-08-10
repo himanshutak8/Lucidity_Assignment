@@ -22,11 +22,11 @@ The implementation is split into the following layers:
 - [1. Architecture](#architecture)
 - [2. AWS Infrastructure - Terraform](#terraform)
 - [3. CI/CD Pipeline - GitHub Actions](#cicd)
-- [4. Monitoring - Prometheus & Grafana](#monitor)
+- [4. Monitoring - Prometheus & Grafana](#monitoring)
 - [5. Conclusion](#conclusion)
 
 <a id="architecture"></a>
-## 1. Architecture
+## 1. Architecture:
 
 The following diagram shows the complete flow from infrastructure provisioning and source-code changes through container publishing, Helm deployment, application execution, and monitoring.
 
@@ -46,7 +46,7 @@ This separation keeps infrastructure provisioning, application packaging, deploy
 
 
 <a id="terraform"></a>
-## 2. AWS Infrastructure – Terraform
+## 2. AWS Infrastructure – Terraform:
 
 Terraform is used to provision the complete AWS infrastructure required to run the application on Amazon EKS. The infrastructure is defined as code and can be recreated consistently across environments without manually configuring individual AWS resources.
 
