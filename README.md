@@ -20,16 +20,11 @@ The implementation is split into the following layers:
 ## Contents
 
 - [1. Architecture](#architecture)
-- [2. AWS Infrastructure (Terraform)](#1-aws-infrastructure-terraform)
-- [3. Application](#3-application)
-- [4. Packaging (Docker + Helm)](#4-packaging-docker--helm)
-- [5. Observability](#5-observability)
-- [6. CI/CD (GitHub Actions)](#6-cicd-github-actions)
-- [Verifying end-to-end](#verifying-end-to-end)
-- [Design decisions & trade-offs](#design-decisions--trade-offs)
-- [Known limitations](#known-limitations)
-- [Teardown](#teardown)
+- [2. AWS Infrastructure - Terraform](#terraform)
+- [3. CI/CD Pipeline - GitHub Actions](#cicd)
+- [4. Monitoring - Prometheus & Grafana](#monitor)
 
+<a id="architecture"></a>
 ## 1. Architecture
 
 The following diagram shows the complete flow from infrastructure provisioning and source-code changes through container publishing, Helm deployment, application execution, and monitoring.
@@ -49,7 +44,7 @@ Inside EKS, the Hello World application runs as Kubernetes pods managed through 
 This separation keeps infrastructure provisioning, application packaging, deployment, and observability independently manageable, while providing a repeatable path from a code change to a monitored workload running on EKS.
 
 
-
+<a id="terraform"></a>
 ## 2. AWS Infrastructure – Terraform
 
 Terraform is used to provision the complete AWS infrastructure required to run the application on Amazon EKS. The infrastructure is defined as code and can be recreated consistently across environments without manually configuring individual AWS resources.
@@ -137,6 +132,7 @@ This means there is no separate manual Helm installation step after creating the
   <img src="docs/images/monitor.png" alt="EKS deployment architecture — VPC, EKS node group, Hello World service, and Prometheus/Grafana monitoring" width="850">
 </p>
 
+<a id="cicd"></a>
 ## 3. CI/CD Pipeline – GitHub Actions:
 
 GitHub Actions is used to automate the deployment of the Python Flask application to EKS. A push to the `main` branch triggers the workflow defined in `.github/workflows/deploy.yaml`.
@@ -186,4 +182,7 @@ The infrastructure and cluster access are managed by **Terraform**, while **GitH
 <p align="center">
   <img src="docs/images/svc.png" alt="EKS deployment architecture — VPC, EKS node group, Hello World service, and Prometheus/Grafana monitoring" width="850">
 </p>
+
+<a id="monitoring"></a>
+## 4. Monitoring – Prometheus & Grafana
 
