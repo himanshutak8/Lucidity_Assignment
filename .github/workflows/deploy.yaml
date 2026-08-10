@@ -9,7 +9,7 @@ permissions:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: lucidity-task
-  EKS_CLUSTER_NAME: eks-fecpgECx
+  EKS_CLUSTER_NAME: eks-7jW64p0G
 jobs:
   deploy:
     runs-on: ubuntu-latest
